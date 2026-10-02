@@ -54,12 +54,14 @@ jobs:
       DF_HEIGHT: "1080"
       DF_FPS: "24"
       DF_NEON_GLOW_QUANTUM: "8"
-
       DF_GAME_RENDER_FPS: "8"
       DF_NEON_BLINK_HZ: "2.6"
-      DF_IMAGE_SHAKE_INTERVAL: "30"
-      DF_IMAGE_SHAKE_DURATION: "0.85"
-      DF_IMAGE_SHAKE_AMPLITUDE: "14"
+      DF_IMAGE_SHAKE_INTERVAL: "10"
+      DF_IMAGE_SHAKE_DURATION: "1.6"
+      DF_IMAGE_SHAKE_AMPLITUDE: "34"
+      DF_IMAGE_SHAKE_ROTATION: "7"
+      DF_IMAGE_SHAKE_SCALE: "0.045"
+      DF_GAME_ENTRY_SECONDS: "1.35"
 
       # Public repo contains catalogs, description and plain used-text history only.
       RUNNER_CONTROL_DIR: "${{ github.workspace }}/runner-control"
@@ -231,6 +233,10 @@ jobs:
               exit 1
             fi
           done
+          if (( DF_GAME_COUNT > 10 )); then
+            echo "games cannot exceed 10 because images/1.mp4 ... images/10.mp4 are one-to-one with games"
+            exit 1
+          fi
           if ! [[ "$CPU_DREAMSHAPER_STEPS" =~ ^(7|8)$ ]]; then
             echo "CPU_DREAMSHAPER_STEPS must be 7 or 8; got: $CPU_DREAMSHAPER_STEPS"
             exit 1
@@ -265,10 +271,15 @@ jobs:
               except SyntaxError:
                   raise SystemExit('Python syntax check failed: ' + name) from None
 
-          for name in ('requirements.txt', 'mota.txt',
-                       'assets/fonts/ipaexg.ttf', 'assets/mascot/fox-sheet.webp',
-                       'assets/tutorial/guide-A.webp', 'assets/tutorial/guide-B.webp',
-                       'assets/tutorial/differences.json', 'assets/presentation/brain-orbit.webp'):
+          for name in (
+              'requirements.txt', 'mota.txt',
+              'assets/fonts/ipaexg.ttf',
+              'images/1.mp4', 'images/2.mp4', 'images/3.mp4', 'images/4.mp4', 'images/5.mp4',
+              'images/6.mp4', 'images/7.mp4', 'images/8.mp4', 'images/9.mp4', 'images/10.mp4',
+              'assets/mascot/fox-sheet.webp',
+              'assets/tutorial/guide-A.webp', 'assets/tutorial/guide-B.webp',
+              'assets/tutorial/differences.json', 'assets/presentation/brain-orbit.webp',
+          ):
               if not Path(name).is_file():
                   raise SystemExit('Missing private runtime input or asset: ' + name)
 
