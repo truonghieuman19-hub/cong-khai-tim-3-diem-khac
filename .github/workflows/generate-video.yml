@@ -41,7 +41,7 @@ jobs:
       # in public prompt-usage.txt.
       DF_GAME_COUNT: "10"
       CPU_DREAMSHAPER_STEPS: "7"
-      YT_PRIVACY_STATUS: "private"  # private | public | unlisted
+      YT_PRIVACY_STATUS: "public"  # private | public | unlisted
 
       DF_COUNTDOWN_SECONDS: "90"
       DF_REVEAL_SECONDS: "10"
